@@ -1,3 +1,6 @@
+import { useRef } from 'react';
+
+import Audio from './components/Audio';
 import Card from './components/Card';
 import Header from './components/Header';
 
@@ -13,11 +16,13 @@ const styles = {
 };
 
 function App() {
+  const soundEl = useRef(null);
   return (
     <div className="App">
       <Header />
       <div style={styles.main}>
-        <Card />
+        <Audio soundEl={soundEl} />
+        <Card soundEl={soundEl} />
       </div>
     </div>
   );
