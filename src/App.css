@@ -8,6 +8,13 @@
 
 .card {
   flex-basis: 40%;
+  transition: box-shadow 0.5s;
+  will-change: transform;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover {
+  box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
 }
 
 @media screen and (max-width: 976px) {
@@ -18,7 +25,7 @@
 
 @media screen and (max-width: 568px) {
   .card {
-    flex-basis: 90%;
+    flex-basis: 85%;
   }
   .banner {
     font-size: 1.5rem;
