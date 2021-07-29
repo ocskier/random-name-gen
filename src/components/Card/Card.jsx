@@ -107,7 +107,7 @@ export const LearnerCard = ({ soundEl }) => {
     window.myInterval = window.setInterval(() => {
       setRandomColor(colors[Math.floor(Math.random() * colors.length)]);
       setRandomPerson(persons[Math.floor(Math.random() * persons.length)]);
-    }, 300);
+    }, 200);
   };
 
   return (
