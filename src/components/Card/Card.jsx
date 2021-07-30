@@ -4,21 +4,6 @@ import { useSpring, animated } from 'react-spring';
 
 import persons from '../../persons.json';
 
-const colors = [
-  'red',
-  'orange',
-  'yellow',
-  'olivegreen',
-  'teal',
-  'blue',
-  'violet',
-  'purple',
-  'pink',
-  'brown',
-  'grey',
-  'black',
-];
-
 const styles = {
   card: {
     minHeight: '30vh',
@@ -38,42 +23,6 @@ const styles = {
   header: {
     marginTop: '0.8rem',
   },
-  red: {
-    backgroundColor: 'red',
-  },
-  orange: {
-    backgroundColor: 'orange',
-  },
-  yellow: {
-    backgroundColor: 'yellow',
-  },
-  olivegreen: {
-    backgroundColor: 'olivegreen',
-  },
-  teal: {
-    backgroundColor: 'teal',
-  },
-  blue: {
-    backgroundColor: 'blue',
-  },
-  violet: {
-    backgroundColor: 'violet',
-  },
-  purple: {
-    backgroundColor: 'purple',
-  },
-  pink: {
-    backgroundColor: 'pink',
-  },
-  brown: {
-    backgroundColor: 'brown',
-  },
-  grey: {
-    backgroundColor: 'grey',
-  },
-  black: {
-    backgroundColor: 'black',
-  },
 };
 
 const calc = (x, y) => [
@@ -82,19 +31,33 @@ const calc = (x, y) => [
   1.1,
 ];
 const trans = (x, y, s) => `perspective(600px) scale(${s})`;
-
 const AnimatedCard = animated(Card);
+
+const generateRandomColor = () => {
+  const randomBetween = (min, max) =>
+    min + Math.floor(Math.random() * (max - min + 1));
+  const r = randomBetween(0, 255);
+  const g = randomBetween(0, 255);
+  const b = randomBetween(0, 255);
+  return {
+    rgbVal: `rgb(${r},${g},${b})`,
+    tone: b < 128 ? 'dark' : 'light',
+  };
+};
 
 export const LearnerCard = ({ soundEl }) => {
   const [loading, setLoading] = useState(false);
-  const [randomColor, setRandomColor] = useState('blue');
+  const [randomColor, setRandomColor] = useState({
+    rgbVal: 'rgb(255,255,255)',
+    tone: 'light',
+  });
   const [randomPerson, setRandomPerson] = useState(persons[0]);
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
   }));
 
   useEffect(() => {
-    setRandomColor(colors[Math.floor(Math.random() * colors.length)]);
+    setRandomColor(generateRandomColor());
   }, [setRandomColor]);
 
   const start = () => {
@@ -108,7 +71,7 @@ export const LearnerCard = ({ soundEl }) => {
     setLoading(true);
     soundEl.current.play();
     window.myInterval = window.setInterval(() => {
-      setRandomColor(colors[Math.floor(Math.random() * colors.length)]);
+      setRandomColor(generateRandomColor());
       setRandomPerson(persons[Math.floor(Math.random() * persons.length)]);
     }, 150);
   };
@@ -121,18 +84,12 @@ export const LearnerCard = ({ soundEl }) => {
       onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
       onMouseLeave={() => set({ xys: [0, 0, 1] })}
     >
-      <Card.Content style={styles[randomColor]}>
+      <Card.Content style={{ backgroundColor: randomColor.rgbVal }}>
         <Card.Header
           style={Object.assign(
             {},
             styles.header,
-            randomColor === 'yellow' ||
-              randomColor === 'teal' ||
-              randomColor === 'violet' ||
-              randomColor === 'pink' ||
-              randomColor === 'orange'
-              ? styles.darkTxt
-              : styles.lightTxt
+            randomColor.tone === 'light' ? styles.darkTxt : styles.lightTxt
           )}
         >
           {randomPerson}
@@ -141,13 +98,7 @@ export const LearnerCard = ({ soundEl }) => {
           style={Object.assign(
             {},
             styles.description,
-            randomColor === 'yellow' ||
-              randomColor === 'teal' ||
-              randomColor === 'violet' ||
-              randomColor === 'pink' ||
-              randomColor === 'orange'
-              ? styles.darkTxt
-              : styles.lightTxt
+            randomColor.tone === 'light' ? styles.darkTxt : styles.lightTxt
           )}
         >
           Who's it going to be ?
