@@ -150,7 +150,7 @@ export const LearnerCard = ({ soundEl }) => {
               : styles.lightTxt
           )}
         >
-          Who's It going to be ?
+          Who's it going to be ?
         </Card.Description>
       </Card.Content>
       <Card.Content extra style={styles.extra}>
