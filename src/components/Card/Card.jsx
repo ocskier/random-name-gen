@@ -7,6 +7,8 @@ import persons from '../../persons.json';
 const styles = {
   card: {
     minHeight: '30vh',
+    boxShadow:
+      '0 0 0 3px #d4d4d5, 0 0px 10px 0 rgb(34 36 38 / 50%), 0 0px 10px 0 rgb(34 36 38 / 70%)',
   },
   description: {
     paddingTop: '2rem',
@@ -22,6 +24,10 @@ const styles = {
   },
   header: {
     marginTop: '0.8rem',
+  },
+  finalShadow: {
+    boxShadow:
+      'rgb(212 212 213) 0px 0px 0px 3px, rgb(34 36 38 / 50%) 0px 0px 20px 10px, rgb(34 36 38 / 70%) 0px 0px 20px 10px',
   },
 };
 
@@ -52,6 +58,13 @@ export const LearnerCard = ({ soundEl }) => {
     tone: 'light',
   });
   const [randomPerson, setRandomPerson] = useState(persons[0]);
+  const [spring, toggleSpring] = useState(false);
+  const [final, setFinal] = useState(false);
+  const { x } = useSpring({
+    from: { x: 0 },
+    x: spring ? 1 : 0,
+    config: { duration: 150 },
+  });
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
   }));
@@ -65,10 +78,13 @@ export const LearnerCard = ({ soundEl }) => {
       clearInterval(window.myInterval);
       window.myInterval = 0;
       setLoading(false);
+      toggleSpring(!spring);
+      setFinal(true);
       soundEl.current.pause();
       return;
     }
     setLoading(true);
+    setFinal(false);
     soundEl.current.play();
     window.myInterval = window.setInterval(() => {
       setRandomColor(generateRandomColor());
@@ -80,9 +96,23 @@ export const LearnerCard = ({ soundEl }) => {
     <AnimatedCard
       centered
       raised
-      style={{ ...styles.card, transform: props.xys.interpolate(trans) }}
+      style={Object.assign(
+        {},
+        {
+          ...styles.card,
+          transform: props.xys.to(trans),
+          scale: x.to({
+            range: [0, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 1],
+            output: [1, 0.97, 0.9, 1.1, 0.9, 1.1, 1.03, 1],
+          }),
+        },
+        final ? { ...styles.finalShadow } : {}
+      )}
       onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
-      onMouseLeave={() => set({ xys: [0, 0, 1] })}
+      onMouseLeave={() => {
+        set({ xys: [0, 0, 1] });
+        setFinal(false);
+      }}
     >
       <Card.Content style={{ backgroundColor: randomColor.rgbVal }}>
         <Card.Header
