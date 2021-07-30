@@ -3,6 +3,7 @@ import { Advertisement } from 'semantic-ui-react';
 const styles = {
   header: {
     width: '100%',
+    backgroundColor: 'mediumblue',
   },
 };
 

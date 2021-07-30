@@ -37,7 +37,6 @@ const styles = {
   },
   header: {
     marginTop: '0.8rem',
-    backgroundColor: 'mediumblue',
   },
   red: {
     backgroundColor: 'red',
