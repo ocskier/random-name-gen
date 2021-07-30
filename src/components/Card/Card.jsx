@@ -32,8 +32,12 @@ const styles = {
   lightTxt: {
     color: 'white',
   },
+  extra: {
+    backgroundColor: 'lightgray',
+  },
   header: {
     marginTop: '0.8rem',
+    backgroundColor: 'mediumblue',
   },
   red: {
     backgroundColor: 'red',
@@ -150,8 +154,8 @@ export const LearnerCard = ({ soundEl }) => {
           Who's It going to be ?
         </Card.Description>
       </Card.Content>
-      <Card.Content extra>
-        <div className="ui two buttons">
+      <Card.Content extra style={styles.extra}>
+        <div className="ui one buttons">
           <Button
             secondary
             color="green"
