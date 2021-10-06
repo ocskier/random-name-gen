@@ -114,7 +114,9 @@ export const LearnerCard = ({ soundEl }) => {
         setFinal(false);
       }}
     >
-      <Card.Content style={{ backgroundColor: randomColor.rgbVal, fontSize, '1.6rem' }}>
+      <Card.Content
+        style={{ backgroundColor: randomColor.rgbVal, fontSize: '1.6rem' }}
+      >
         <Card.Header
           style={Object.assign(
             {},
