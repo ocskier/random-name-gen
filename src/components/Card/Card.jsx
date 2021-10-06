@@ -6,7 +6,7 @@ import persons from '../../persons.json';
 
 const styles = {
   card: {
-    minHeight: '30vh',
+    minHeight: '40vh',
     boxShadow:
       '0 0 0 3px #d4d4d5, 0 0px 10px 0 rgb(34 36 38 / 50%), 0 0px 10px 0 rgb(34 36 38 / 70%)',
   },
@@ -114,7 +114,7 @@ export const LearnerCard = ({ soundEl }) => {
         setFinal(false);
       }}
     >
-      <Card.Content style={{ backgroundColor: randomColor.rgbVal }}>
+      <Card.Content style={{ backgroundColor: randomColor.rgbVal, fontSize, '1.6rem' }}>
         <Card.Header
           style={Object.assign(
             {},
